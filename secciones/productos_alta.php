@@ -9,13 +9,24 @@ $Id_Rand = $mysqli->real_escape_string(Valida_utf8($_REQUEST['id_rand']));
 if($Id_Rand == ""){ $Id_Rand = substr(md5(uniqid(rand())),0,6); }
 $Tipo = "productos";
 $Id_Form = "Productos";
+$ajax_script = "productos_alta"; 
+
 $id_table = $mysqli->real_escape_string(Valida_utf8($_REQUEST['id_table']));
 $query_Cosa = "SELECT * FROM `".$Id_Form."` WHERE `id` = '$id_table' ORDER BY `id` DESC;";
 $result_Cosa = $mysqli->query($query_Cosa);
 $num_Cosa = $result_Cosa->num_rows;
+if($num_Cosa){
 $Input_Array = $result_Cosa->fetch_array(MYSQLI_ASSOC);
-
 $Id_Producto = $Input_Array['Id_Producto'];
+} else {
+$Id_Producto = urls__($Id_Form."_".getGUID());
+$Insert_Cosa = "INSERT INTO `".$Id_Form."` (`id`, `Id_Producto`, `Estatus`) VALUES ('NULL', '$Id_Producto', 'Inactivo');"; 
+$result_Cosa_Insert = $mysqli->query($Insert_Cosa);
+$id_table = $mysqli->insert_id;
+$msg_new = <<<EOF
+<div class="alert alert-info" align="center">Nuevo borrador creado, id: {$id_table}</div>
+EOF;
+}
 ?>
 <style>
 .map_canvas {
@@ -23,6 +34,10 @@ width: 100%;
 height: 300px;
 }
 </style>
+
+<?php 
+echo $msg_new; 
+?>
 
 <!-- Bread crumb is created dynamically -->
 <!-- row -->
@@ -91,6 +106,7 @@ data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" accept-charset="I
 </fieldset>
 
 <?php
+$Id_Tipo = $Id_Producto; /* 
 $query_Imagenes_Adjuntas = "SELECT * FROM `Imagenes_Adjuntas` WHERE `Tipo` = '$Tipo' AND `Id_Tipo` = '$Id_Producto' ORDER BY `id` DESC;";
 $result_Imagenes_Adjuntas = $mysqli->query($query_Imagenes_Adjuntas);
 $num_Imagenes_Adjuntas = $result_Imagenes_Adjuntas->num_rows;
@@ -112,7 +128,7 @@ EOF;
 $tr_tracks .= <<<EOF
 <tr>
 <td data-order="{$id_track}" align="center">
-<a href="{$url_server}/borrar_adjunto.php?id_img={$id_track}&return={$uri_64}" onclick='return confirm("Desea borrar este archivo de manera permanente?")' title="Borrar este archivo de forma permanente"><i class="fa fa-trash" aria-hidden="true"></i></a>
+<a href="javascript:;" onclick='return confirm_delete("Desea borrar este archivo de manera permanente?", "{$url_server}/borrar_adjunto.php?id_img={$id_track}&return={$uri_64}")' title="Borrar este archivo de forma permanente"><i class="fa fa-trash" aria-hidden="true"></i></a>
 </td>
 <td><a href="{$Url}" target="_blank">{$Nombre_Img}</a></td>
 <td align="center">
@@ -122,8 +138,9 @@ $tr_tracks .= <<<EOF
 EOF;
 }
 ?>
-<hr>
-<div class="text-center"><h4>Adjuntos cargados previamente: </h4></div>
+<div class="text-center">
+<h4>Adjuntos cargados previamente: </h4>
+</div>
 <div class="table-responsive">
 <table class="table table-bordered">
 <thead>
@@ -137,7 +154,28 @@ EOF;
 <tbody><?php echo $tr_tracks; ?></tbody>
 </table>
 </div>
-<?php } ?>
+<?php } */ ?>
+
+<div class="div_update_uploads"></div>
+
+<script type="text/javascript">
+var tipo = "<?php echo $Tipo; ?>";
+var id_tipo = "<?php echo $Id_Tipo; ?>";
+var id_table = "<?php echo $id_table; ?>";
+var ajax_script = "<?php echo $ajax_script; ?>";
+
+$(".div_update_uploads").load("list_uploads.php?id_table="+id_table+"&is_ajax=1&ajax_script="+ajax_script+"&tipo="+tipo+"&id_tipo="+id_tipo+"&filename=");
+
+function confirm_delete(question, url) {
+if(confirm(question)){
+$(".div_update_uploads").html('<i class="fa fa-refresh fa-spin fa-1x fa-fw"></i>');
+$(".div_update_uploads").load(url); 
+$(".div_update_uploads").load("list_uploads.php?id_table="+id_table+"&is_ajax=1&ajax_script="+ajax_script+"&tipo="+tipo+"&id_tipo="+id_tipo+"&filename=");
+} else {
+return false;  
+}
+}
+</script>
 
 <?php
 if($Id_Producto != ""){
@@ -227,7 +265,7 @@ url: url, dataType: 'json', autoUpload: true,
 //acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 acceptFileTypes: /(\.|\/)(gif|jpe?g|png|mp4|mp3)$/i,
 maxFileSize: 10000000, limitMultiFileUploads: 2, maxNumberOfFiles: 2,
-disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent), previewMaxWidth: 200, previewMaxHeight: 200, previewCrop: true
+disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent), previewMaxWidth: 100, previewMaxHeight: 100, previewCrop: true
 
 }).on('fileuploadadd', function (e, data) {
 
@@ -235,10 +273,10 @@ $('#progress .progress-bar').removeClass('progress-bar-success');
 $('#progress .progress-bar').addClass('progress-striped');
 $('#progress .progress-bar').addClass('active');
 
-data.context = $('<div class="col-sm-6" align="left" /> ').appendTo('#files');
+data.context = $('<div class="col-sm-3" align="center" /> ').appendTo('#files');
 $.each(data.files, function (index, file) {
-var node = $('<p/>').append($('<span/> ').text(file.name+' '));
-//var node = $('<p/>').append($('<span/>'));
+//var node = $('<p/>').append($('<span/><br>').text(file.name+''));
+var node = $('<p/>').append($('<span/><br>'));
 if (!index) { node.append('').append(uploadButton.clone(true).data(data)); }
 node.appendTo(data.context);
 });
@@ -274,9 +312,10 @@ $('#progress .progress-bar').addClass('progress-bar-success');
 
 $.each(data.result.files, function (index, file) {
 if (file.url) {
-var link = $('<a>').attr('target', '_blank').prop('href', file.url);
+var link = $('<a>').attr('target', '_blank').prop('href', file.url).prop('title', file.name);
 $(data.context.children()[index]).wrap(link);
 data.context.find('button').html('<i class="fa fa-check" aria-hidden="true"></i>').removeClass('btn-primary').addClass('btn-success').prop('disabled');
+$(".div_update_uploads").load("list_uploads.php?id_table="+id_table+"&ajax_script="+ajax_script+"&tipo="+tipo+"&id_tipo="+id_tipo+"&filename="+file.name);
 } else if (file.error) {
 var error = $('<span class="text-danger"/>').text(file.error);
 $(data.context.children()[index]).append('<br>').append(error);
@@ -286,7 +325,7 @@ $(data.context.children()[index]).append('<br>').append(error);
 }).on('fileuploadfail', function (e, data) {
 
 $.each(data.files, function (index) {
-var error = $('<span class="text-danger"/>').text('Adjunto cancelado');
+var error = $('<span class="text-danger"/>').text('Error'+JSON.stringify(e));
 $(data.context.children()[index])
 .append('Error: ').append(error);
 });

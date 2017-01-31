@@ -8,7 +8,7 @@ include_once("../../funciones.php");
 
 $Id_Rand = $mysqli->real_escape_string(Valida_utf8($_REQUEST['id_rand']));
 if($Id_Rand == ""){ $Id_Rand = substr(md5(uniqid(rand())),0,6); }
-$Tipo = "categorias";
+$Tipo = "categorias"; 
 $Id_Form = "Productos_Categorias";
 $id_table = $mysqli->real_escape_string(Valida_utf8($_REQUEST['id_table']));
 $query_Cosa = "SELECT * FROM `".$Id_Form."` WHERE `id` = '$id_table' ORDER BY `id` DESC;";

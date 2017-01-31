@@ -14,6 +14,7 @@ $return = $mysqli->real_escape_string($_REQUEST['return']);
 if($return == ""){ $return = "../"; } else { $return = base64_decode($return); }
 
 $id_img = $mysqli->real_escape_string(Valida_utf8($_REQUEST['id_img']));
+$is_ajax = $mysqli->real_escape_string(Valida_utf8($_REQUEST['is_ajax']));
 
 $query_Imagenes_Adjuntas = "SELECT * FROM `Imagenes_Adjuntas` WHERE `id` = '".$id_img."' ORDER BY `id` DESC;";
 $result_Imagenes_Adjuntas = $mysqli->query($query_Imagenes_Adjuntas);
@@ -73,5 +74,9 @@ $msg = <<<EOF
 <h1 class="text-danger">Registro NO borrado de la base de datos.</h1>
 EOF;
 }
+if($is_ajax == ""){
 echo $msg;
+} else {
+
+}
 ?>
