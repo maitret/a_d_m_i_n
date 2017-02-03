@@ -26,6 +26,7 @@ while($row_Imagenes_Adjuntas = $result_Imagenes_Adjuntas->fetch_array(MYSQLI_ASS
 $id_alv = $row_Imagenes_Adjuntas['id'];
 $Id_Img = $row_Imagenes_Adjuntas['Id_Img'];
 $Nombre_Img = $row_Imagenes_Adjuntas['Nombre_Img'];
+$Nombre_Img_FS = $row_Imagenes_Adjuntas['Nombre_Img_FS'];
 $Usuario = $row_Imagenes_Adjuntas['Usuario'];
 $FechaHora = $row_Imagenes_Adjuntas['FechaHora'];
 $Tamano = $row_Imagenes_Adjuntas['Tamano'];
@@ -38,6 +39,9 @@ $Url_S3 = $row_Imagenes_Adjuntas['Url_S3'];
 $Url_CDN = $row_Imagenes_Adjuntas['Url_CDN'];
 $Path_Srv = $row_Imagenes_Adjuntas['Path_Srv'];
 $Demo = $row_Imagenes_Adjuntas['Demo'];
+
+$Path_Srv_Clean = str_replace($Nombre_Img_FS, "", $Path_Srv);
+unlink($Path_Srv_Clean."thumbnail/".$Nombre_Img_FS);
 
 $results .= "<li>Borrando <b>".$Nombre_Img." (".$Id_Img.")</b>";
 if(unlink($Path_Srv)){
