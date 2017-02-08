@@ -89,7 +89,7 @@ echo $msg_new;
 <!-- widget content -->
 <div class="widget-body">
 
-<form id="" class="source_form" method="post" action="_/productos_alta_procesa"
+<form id="" class="source_form_" method="post" action="_/productos_alta_procesa"
 data-bv-message="Este valor es invalido" data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
 data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
 data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" accept-charset="ISO-8859-1">
@@ -102,6 +102,13 @@ data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" accept-charset="I
 <?php echo PrintField($Id_Form, "Precio", $Input_Array['Precio']); ?>
 <?php echo PrintField($Id_Form, "Moneda", $Input_Array['Moneda']); ?>
 <?php echo PrintField($Id_Form, "Id_Categoria", $Input_Array['Id_Categoria']); ?>
+</fieldset>
+
+<fieldset>
+<?php echo PrintField($Id_Form, "Descripcion", $Input_Array['Descripcion']); ?>
+</fieldset>
+
+<fieldset>
 <?php echo PrintField($Id_Form, "Estatus", $Input_Array['Estatus']); ?>
 </fieldset>
 
@@ -335,8 +342,11 @@ $(data.context.children()[index])
 });
 };
 
-
 pageSetUp();
+
+var ckeditor = function() {
+CKEDITOR.replace( 'Descripcion', { height: '380px', startupFocus : true} );
+};
 
 var pagefunction = function() {
 $('#source_form').bootstrapValidator();
@@ -370,4 +380,5 @@ loadScript("js/plugin/jquery-file-upload/js/jquery.fileupload-validate.js", file
 });
 
 loadScript("js/plugin/bootstrapvalidator/bootstrapValidator.min.js", pagefunction);
+loadScript("js/plugin/ckeditor/ckeditor.js", ckeditor); 
 </script>

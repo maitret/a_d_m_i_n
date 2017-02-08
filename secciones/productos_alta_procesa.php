@@ -17,6 +17,7 @@ $Id_Categoria = $mysqli->real_escape_string(Valida_utf8($_REQUEST['Id_Categoria'
 $Id_CategoriaSub = $mysqli->real_escape_string(Valida_utf8($_REQUEST['Id_CategoriaSub']));
 $Id_Producto = $mysqli->real_escape_string(Valida_utf8($_REQUEST['Id_Producto']));
 $Producto = $mysqli->real_escape_string(Valida_utf8($_REQUEST['Producto']));
+$Descripcion = $mysqli->real_escape_string(Valida_utf8($_REQUEST['Descripcion'])); 
 $Precio = $mysqli->real_escape_string(Valida_utf8($_REQUEST['Precio']));
 $Moneda = $mysqli->real_escape_string(Valida_utf8($_REQUEST['Moneda']));
 $Estatus = $mysqli->real_escape_string(Valida_utf8($_REQUEST['Estatus']));
@@ -25,13 +26,13 @@ $query_Productos = "SELECT * FROM `Productos` WHERE `id` = '".$id_table."' ORDER
 $result_Productos = $mysqli->query($query_Productos);
 $num_Productos = $result_Productos->num_rows;
 if ($num_Productos >= 1) {
-$Q_Procesa = "UPDATE `Productos` SET `Id_Marca` = '$Id_Marca', `Id_Categoria` = '$Id_Categoria', `Producto` = '$Producto', `Estatus` = '$Estatus', `Precio` = '$Precio', `Moneda` = '$Moneda', `Id_CategoriaSub` = '$Id_CategoriaSub' WHERE `id` = '".$id_table."';";
+$Q_Procesa = "UPDATE `Productos` SET `Id_Marca` = '$Id_Marca', `Id_Categoria` = '$Id_Categoria', `Producto` = '$Producto', `Descripcion` = '$Descripcion', `Estatus` = '$Estatus', `Precio` = '$Precio', `Moneda` = '$Moneda', `Id_CategoriaSub` = '$Id_CategoriaSub' WHERE `id` = '".$id_table."';";
 } else {
 $Id_Producto = urls__($Producto."_".getGUID());
 $Q_Procesa = "INSERT INTO `Productos` (
-`Id_Marca`, `Id_Categoria`, `Id_Producto`, `Producto`, `Estatus`, `Precio`, `Moneda`, `Id_CategoriaSub`
+`Id_Marca`, `Id_Categoria`, `Id_Producto`, `Producto`, `Descripcion`, `Estatus`, `Precio`, `Moneda`, `Id_CategoriaSub`
 ) VALUES (
-'$Id_Marca', '$Id_Categoria', '$Id_Producto', '$Producto', '$Estatus', '$Precio', '$Moneda', '$Id_CategoriaSub'
+'$Id_Marca', '$Id_Categoria', '$Id_Producto', '$Producto', '$Descripcion', '$Estatus', '$Precio', '$Moneda', '$Id_CategoriaSub'
 );";
 }
 
