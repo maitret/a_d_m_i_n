@@ -157,6 +157,7 @@ CREATE TABLE `Productos` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `Id_Producto` varchar(100) NOT NULL,
   `Producto` varchar(100) NOT NULL,
+  `Descripcion` mediumtext NOT NULL,
   `Id_Marca` varchar(100) NOT NULL,
   `Id_Categoria` varchar(100) NOT NULL,
   `Id_CategoriaSub` varchar(100) NOT NULL,
