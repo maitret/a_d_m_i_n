@@ -53,6 +53,9 @@ INSERT INTO `FormContact_Fields` (`id`, `Id_Cliente`, `Slug`, `Label`, `Placehol
 (70,	'',	'Categoria',	'Categoría',	'',	'text',	'',	'',	'1',	'Productos_Categorias',	'col-sm-6',	'',	''),
 (71,	'',	'Estatus',	'Estatus',	'',	'select',	'{ \"Activo\":\"Activo\", \"Inactivo\":\"Inactivo\" }',	'',	'1',	'Productos_Categorias',	'col-sm-6',	'',	'');
 
+INSERT INTO `FormContact_Fields` (`id`, `Id_Cliente`, `Slug`, `Label`, `Placeholder`, `Type`, `Value`, `Required`, `Order`, `Id_Form`, `class`, `Extra`, `GetVals_Table`) VALUES
+(NULL,	'',	'Descripcion',	'Descripción',	'',	'textarea',	'',	'',	'1',	'Productos',	'col-sm-12',	'',	'');
+
 DROP TABLE IF EXISTS `Imagenes_Adjuntas`;
 CREATE TABLE `Imagenes_Adjuntas` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
