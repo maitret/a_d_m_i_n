@@ -23,10 +23,10 @@ include_once("funciones.php");
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 
 <!-- No cambies este orden nunca! -->
-<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production-plugins.min.css">
-<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
-<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css">
-<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/production-plugins.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/production.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/skins.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/rtl.min.css">
 
 <link rel="stylesheet" href="<?php echo $url_server; ?>/js/plugin/jquery-file-upload/css/jquery.fileupload.css">
 
