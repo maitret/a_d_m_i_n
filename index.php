@@ -9,7 +9,7 @@ include_once("funciones.php");
 <html lang="es-mx" class="smart-style-<?php echo $smart_style;?>">
 <head>
 <meta charset="ISO-8859-1">
-<title>Admin Panel</title>
+<title><?php echo $sys_name; ?></title>
 <meta name="description" content="AdminPanel desarrollado por myhostmx.com">
 <meta name="author" content="MyHostMX.com">
 

@@ -69,6 +69,7 @@ $google_gcloud_keyFile = '{
 $google_gcloud_projectId = "405953922342";
 $google_gcloud_bucketName = "adminpanel-demo.appspot.com";
 
+$sys_name = "Admin Panel"; 
 $smart_style = "5"; /* Existen varias opciones, del 1 al 6 creo :p */
 
 ?>
