@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/maitret/a_d_m_i_n.png?label=ready&title=Ready)](https://waffle.io/maitret/a_d_m_i_n)
 # Nothing To Do Here, ALV! :V
 :bowtie:
 
